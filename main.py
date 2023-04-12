@@ -1,8 +1,8 @@
 from collections import deque
 
+
 class Graph:
     def __init__(self, edges):
-
         self.isNotNumeric = False
 
         self.N = len(set(sum(edges, ())))
@@ -32,7 +32,6 @@ class Graph:
             self.indegree[dest] += 1
 
     def is_cyclic(self):
-
         indegree_copy = self.indegree[:]
 
         queue = deque([i for i in range(len(self.adjList)) if not indegree_copy[i]])
@@ -40,12 +39,10 @@ class Graph:
         visited_nodes = 0
 
         while queue:
-
             node = queue.popleft()
             visited_nodes += 1
 
             for neighbor in self.adjList[node]:
-
                 indegree_copy[neighbor] -= 1
 
                 if not indegree_copy[neighbor]:
@@ -53,15 +50,13 @@ class Graph:
 
         return visited_nodes != len(self.adjList)
 
+
 def find_all_topological_orders(graph, path, N, result):
-
     if len(path) == N:
-
         result.append(", ".join(str(v) for v in path))
         return
 
     for v in range(N):
-
         if graph.indegree[v] == 0 and v not in path:
             for u in graph.adjList[v]:
                 graph.indegree[u] -= 1
@@ -73,11 +68,10 @@ def find_all_topological_orders(graph, path, N, result):
             path.pop()
 
             for u in graph.adjList[v]:
-
                 graph.indegree[u] += 1
 
-def print_all_topological_orders(graph):
 
+def print_all_topological_orders(graph):
     path = deque()
 
     result = []
@@ -85,7 +79,6 @@ def print_all_topological_orders(graph):
     find_all_topological_orders(graph, path, graph.N, result)
 
     if graph.isNotNumeric:
-
         result = [list(map(int, s.split(","))) for s in result]
         result = [
             ", ".join(list(graph.node_dict.keys())[v] for v in path) for path in result
@@ -96,6 +89,7 @@ def print_all_topological_orders(graph):
     )
 
     print("\n".join(result))
+
 
 if __name__ == "__main__":
     # input for edges as a string or from consecutive natural numbers starting from 0
